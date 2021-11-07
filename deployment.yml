@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: study-app-deploy
+  labels:
+    app: study-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: study-app
+  minReadySeconds: 5
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: study-app
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: study-app
+        image: 074177506936.dkr.ecr.us-west-2.amazonaws.com/study-app:latest
+        imagePullPolicy: Always
+        ports: 
+        - containerPort: 80

@@ -1,0 +1,63 @@
+//deploy cluster
+eksctl create cluster --config-file=bottlerocket.yaml
+
+//check number of nodes
+kubectl get nodes
+
+//deply LB controller service account
+kubectl apply -f C:\repos\k8s\aws-lb-service-account.yml
+
+//install cert-manager
+kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v1.5.4/cert-manager.yaml
+
+//install the controller
+kubectl apply -f v2_3_0_full.yaml
+
+//Deploy a pod
+kubectl apply -f C:\repos\k8s\pod.yml
+
+//list pods
+kubectl get pods --watch
+
+//get a bit more pod info
+kubectl get pods -o wide
+
+//get all pod info
+kubectl describe pods study-app
+
+
+//declare a service imperatively (not recommended by K8s)
+kubectl expose pod study-app --name=study-svc --target-port=80 --type=NodePort
+
+kubectl get svc
+
+kubectl delete svc study-svc
+
+//declare a service the proper way
+kubectl apply -f C:\repos\k8s\svc-nodeport.yml
+
+kubectl describe svc ps-nodeport
+
+kubectl apply -f C:\repos\k8s\svc-lb.yml
+
+kubectl describe svc kd-lb
+
+kubectl get svc kd-lb
+
+//deployments
+kubectl apply -f deployment.yml
+
+//check labels
+kubectl get pods --show-labels
+
+//watch rollout
+kubectl rollout status deploy study-app
+
+
+//get replica sets
+kubectl get rs
+
+//rollback
+kubectl rollout undo deploy study-app --to-revision=1
+
+
