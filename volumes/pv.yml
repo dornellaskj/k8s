@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv
+spec:
+  accessModes:
+  - ReadWriteOnce #only one pod can access the volume at a time
+  storageClassName: fast
+  capacity:
+    storage: 50Gi
+  persistentVolumeReclaimPolicy: Retain
+  gcePersistentDisk:  
+    pdName: vol  

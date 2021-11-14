@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc
+spec:
+  accessModes:
+  - ReadWriteOnce #only one pod can access the volume at a time
+  storageClassName: fast
+  resources:
+    requests:
+      storage: 50Gi
